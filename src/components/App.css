@@ -12,8 +12,59 @@ html {
   font-size: 2em;
 }
 
+.game-title {
+  font-size: 5em;
+  color: white;
+  border: 5px solid black;
+  border-radius: 1rem;
+  background: darkcyan;
+  padding: 1rem;
+}
+
+.game-container {
+  padding: 1em;
+  border-radius: 1em;
+  background: darkslateblue;
+
+  border: 5px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.guess-grid {
+  display: grid;
+  width: 100%;
+  column-gap: 1.5em;
+  grid-template-columns: repeat(5, 1fr);
+  margin-top: 1em;
+  margin-bottom: none;
+}
+
+.guess-letter {
+  height: 2em;
+  line-height: 2em;
+  border-radius: 0.2em;
+  color: white;
+  font-size: 2em;
+  text-align: center;
+}
+
+.guess-correct {
+  background: green;
+}
+
+.guess-found {
+  background: darkorange;
+}
+
+.guess-wrong {
+  background: darkcyan;
+}
+
 .App {
-  height: 100vh;
+  margin-top: 5em;
   display: flex;
   align-items: center;
   justify-content: center;
