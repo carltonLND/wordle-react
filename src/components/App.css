@@ -1,3 +1,21 @@
 html {
-  background: #f8f8f8;
+  background: slategray;
+}
+
+.input-guess {
+  padding: 0.5em;
+  border-radius: 0.5em;
+  border: none;
+  background: darkcyan;
+  color: white;
+  text-align: center;
+  font-size: 2em;
+}
+
+.App {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
