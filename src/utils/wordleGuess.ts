@@ -26,11 +26,22 @@ export function markWordleGuess(
   const marks: Mark[] = [];
 
   guess.split("").forEach((letter, index) => {
-    if (targetOccurences[letter] === 0) {
-      marks.push("wrong");
-    } else {
-      marks.push(getMark(letter, index, hiddenTarget));
+    const mark = isCorrectLetter(letter, index, hiddenTarget);
+    marks.push(mark);
+
+    if (mark === "correct") {
       targetOccurences[letter]--;
+    }
+  });
+
+  marks.forEach((mark, index) => {
+    const letter = guess[index];
+    if (mark === "wrong" && targetOccurences[letter] !== 0) {
+      const newMark = isFoundLetter(guess[index], hiddenTarget);
+      if (newMark === "found") {
+        marks.splice(index, 1, newMark);
+        targetOccurences[letter]--;
+      }
     }
   });
 
@@ -40,20 +51,28 @@ export function markWordleGuess(
   };
 }
 
-function getMark(letter: string, index: number, target: string): Mark {
-  let result: Mark = "wrong";
+export function isWin(markedGuess: MarkedGuess): boolean {
+  return markedGuess.marks.every((mark) => mark === "correct");
+}
 
+function isFoundLetter(letter: string, target: string): Mark {
+  for (let i = 0; i < target.length; i++) {
+    if (letter === target[i]) {
+      return "found";
+    }
+  }
+
+  return "wrong";
+}
+
+function isCorrectLetter(letter: string, index: number, target: string): Mark {
   for (let i = 0; i < target.length; i++) {
     if (letter === target[i] && index === i) {
       return "correct";
     }
-
-    if (letter === target[i]) {
-      result = "found";
-    }
   }
 
-  return result;
+  return "wrong";
 }
 
 function countOccurences(word: string): LetterOccurences {

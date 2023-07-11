@@ -39,3 +39,13 @@ test("Test all the things", () => {
     marks: ["found", "found", "wrong", "wrong", "wrong"],
   });
 });
+
+test("Test later occurance is correct", () => {
+  const target = "VARAS";
+  const guess = "VRRAA";
+
+  expect(markWordleGuess(guess, target)).toStrictEqual({
+    guessWord: guess,
+    marks: ["correct", "wrong", "correct", "correct", "found"],
+  });
+});
