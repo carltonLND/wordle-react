@@ -1,10 +1,10 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import { markWordleGuess, isWin } from "../utils/wordleGuess";
+import { markWordleGuess, isWin, MarkedGuess } from "../utils/wordleGuess";
 
 export default function App() {
   const [randomWord, setRandomWord] = useState<string>("");
-  const [guessList, setGuessList] = useState<string[]>([]);
+  const [guessList, setGuessList] = useState<MarkedGuess[]>([]);
   const [inputValue, setInputValue] = useState("");
 
   const getRandomWord = () => {
@@ -18,8 +18,8 @@ export default function App() {
   const handleOnKeyDown = (key: string) => {
     if (key === "Enter" && inputValue.length === 5) {
       setGuessList((prev) => {
-        const newList = [...prev, inputValue];
         const markedGuess = markWordleGuess(inputValue, randomWord);
+        const newList = [...prev, markedGuess];
 
         if (isWin(markedGuess)) {
           alert("YOU WIN!!!");
@@ -59,7 +59,7 @@ export default function App() {
         />
         {guessList.map((guess, index) => (
           <div key={index} className="guess-grid">
-            <RenderGuess guess={guess} target={randomWord} />
+            <Guess guess={guess} />
           </div>
         ))}
       </div>
@@ -67,23 +67,13 @@ export default function App() {
   );
 }
 
-function RenderGuess({
-  guess,
-  target,
-}: {
-  guess: string;
-  target: string;
-}): JSX.Element {
-  const markedGuess = markWordleGuess(guess, target);
+function Guess({ guess }: { guess: MarkedGuess }): JSX.Element {
   return (
     <>
-      {guess.split("").map((letter, index) => {
+      {guess.marks.map((mark, index) => {
         return (
-          <div
-            key={index}
-            className={`guess-letter guess-${markedGuess.marks[index]}`}
-          >
-            {letter}
+          <div key={index} className={`guess-letter guess-${mark}`}>
+            {guess.guessWord[index]}
           </div>
         );
       })}

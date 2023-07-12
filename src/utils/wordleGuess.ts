@@ -1,6 +1,6 @@
 type Mark = "correct" | "found" | "wrong";
 
-interface MarkedGuess {
+export interface MarkedGuess {
   guessWord: string;
   marks: Mark[];
 }
